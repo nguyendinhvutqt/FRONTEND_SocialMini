@@ -1,0 +1,26 @@
+$gray-color: #f0f2f5;
+$color-active: #0866ff;
+$black-color: black;
+
+.nav-action {
+  height: 100%;
+  gap: 4px;
+
+  .link-action {
+    padding: 12px 40px;
+    font-size: 24px;
+
+    &:not(.active):hover {
+      border-radius: 8px;
+      background-color: $gray-color;
+    }
+  }
+
+  .active {
+    border-bottom: 2px solid $color-active;
+
+    .icon-action {
+      color: $color-active; // Đặt màu xanh cho icon khi active
+    }
+  }
+}

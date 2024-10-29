@@ -1,0 +1,132 @@
+.title-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px 0 16px;
+
+  .flex {
+    img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+    }
+
+    p {
+      margin-left: 16px;
+    }
+  }
+
+  .group-icon {
+    .icon-handle {
+      padding: 8px;
+      margin-right: 4px;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.des-cart {
+  padding: 0 16px;
+}
+
+.img-cart {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+
+  // Khi có 1 hình ảnh, mỗi hình sẽ chiếm toàn bộ chiều rộng
+  &.one-image {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  // Khi có 2 hình ảnh, chia thành 2 cột
+  &.two-images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Khi có 3 hình ảnh, chia thành 3 cột
+  &.three-images {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Khi có 4 hình ảnh trở lên, chia thành 2 cột
+  &.more-than-four {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .extra-image {
+    position: relative;
+    opacity: 0.5; // Làm mờ hình ảnh cuối cùng
+
+    &::after {
+      content: "+1"; // Hiển thị dấu +1
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+  }
+}
+
+.react-cart {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 12px;
+  border-bottom: 1px solid #f0f2f5;
+
+  .react {
+    .icon-react {
+      margin: 0 8px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    p {
+      margin-left: 8px;
+    }
+  }
+}
+
+.btn-cart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 24px;
+    background-color: white;
+    width: 100%;
+    margin: 0 8px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #f0f2f5;
+      border-radius: 8px;
+    }
+
+    .icon-btn {
+      font-size: 16px;
+      margin-right: 8px;
+    }
+  }
+}

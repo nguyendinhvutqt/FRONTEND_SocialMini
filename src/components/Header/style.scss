@@ -1,0 +1,13 @@
+$gray-color: #f0f2f5;
+$color-active: #0866ff;
+$black-color: black;
+
+.wrapper-header {
+  background-color: white;
+  height: 56px;
+  padding: 4px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
