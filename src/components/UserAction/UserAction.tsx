@@ -7,10 +7,18 @@ import avatar from "../../assets/avatar.jpg";
 import { FaBell } from "react-icons/fa";
 import React, { useState } from "react";
 import Tippy from "@tippyjs/react/headless";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "../../redux/features/user/userSlice";
+import { RootState } from "../../redux/store";
 
 const UserAction: React.FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);
+
   const [openTippy, setOpenTippy] = useState({
     openGrid: false,
     openMessage: false,
@@ -28,7 +36,10 @@ const UserAction: React.FC = () => {
     }));
   };
 
-  console.log(openTippy);
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigate("/sign-in");
+  };
 
   return (
     <div className="header-user flex">
@@ -137,17 +148,20 @@ const UserAction: React.FC = () => {
               <WrapperDropdown>
                 <Link to={"/"} className="flex profile-user link">
                   <IconAvatar imageUrl={avatar} />
-                  <p>Nguyễn Đình Vũ</p>
+                  <p>{user?.displayName}</p>
                 </Link>
                 <Link to={"/ad"} className="flex profile-btn hover-gray link">
                   <CiLogout />
-                  <p>Đăng xuất</p>
+                  <p>Profile</p>
                 </Link>
                 <div className="flex profile-btn hover-gray link">
                   <CiLogout />
-                  <p>Đăng xuất</p>
+                  <p>New</p>
                 </div>
-                <div className="flex profile-btn hover-gray link">
+                <div
+                  className="flex profile-btn hover-gray link"
+                  onClick={handleLogout}
+                >
                   <CiLogout />
                   <p>Đăng xuất</p>
                 </div>
@@ -159,7 +173,7 @@ const UserAction: React.FC = () => {
             className="wrap-icon-action"
             onClick={() => handleOpen("openUser")}
           >
-            <IconAvatar imageUrl={avatar} />
+            <IconAvatar imageUrl={user?.avatar} />
           </div>
         </Tippy>
       </div>

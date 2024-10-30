@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -6,8 +6,13 @@ import {
   SignUpValidateData,
 } from "../../validation/signUpSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const SignUp = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const nagivate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,9 +29,42 @@ const SignUp = () => {
     },
     resolver: yupResolver(signUpSchema),
   });
-  const onSubmit = handleSubmit((data: SignUpValidateData) =>
-    console.log(data)
-  );
+
+  const onSubmit = handleSubmit(async (data: SignUpValidateData) => {
+    if (isLoading) {
+      return;
+    }
+    try {
+      // Định dạng lại `birthDay`
+      setIsLoading(true);
+      const formattedData = {
+        ...data,
+        birthDay: data.birthDay
+          ? new Date(data.birthDay).toISOString().split("T")[0]
+          : "",
+      };
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/auth/sign-up`,
+        formattedData
+      );
+
+      if (response.status === 201) {
+        setIsLoading(false);
+        toast.success("Đăng ký thành công, vùi lòng xác thực email");
+        nagivate("/sign-in");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      if (axios.isAxiosError(error)) {
+        // Lấy message từ AxiosError
+        toast.error(error.response?.data?.message || "Đã xảy ra lỗi");
+      } else {
+        // Trong trường hợp lỗi khác không phải AxiosError
+        toast.error("Đã xảy ra lỗi không xác định");
+      }
+    }
+  });
 
   return (
     <section className="wrapper-sign-up">
@@ -92,7 +130,7 @@ const SignUp = () => {
             <p className="text-error">{errors.confirmPassword?.message}</p>
           )}
         </div>
-        <button className="btn">Đăng ký</button>
+        <button className="btn">{isLoading ? "Đang xử lý" : "Đăng ký"}</button>
         <p className="text-sign-up">
           Bạn đã có tài khoản{" "}
           <Link className="link link-sign-in" to={"/sign-in"}>

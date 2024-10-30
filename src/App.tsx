@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout/MainLayout";
 import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function Aa() {
   return <h2>aaaaaa</h2>;
@@ -20,7 +21,14 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route path="a" element={<Aa />} />
           <Route path="b" element={<Bb />} />
         </Route>
