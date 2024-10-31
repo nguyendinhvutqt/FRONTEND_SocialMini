@@ -5,10 +5,7 @@ import { Home } from "./pages/Home";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-
-function Aa() {
-  return <h2>aaaaaa</h2>;
-}
+import { ProfileUser } from "./pages/ProfileUser";
 
 function Bb() {
   return <h2>bbbbbbbbbb</h2>;
@@ -29,7 +26,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="a" element={<Aa />} />
+          <Route
+            path="/user/profile"
+            element={
+              <ProtectedRoute>
+                <ProfileUser />
+              </ProtectedRoute>
+            }
+          />
           <Route path="b" element={<Bb />} />
         </Route>
       </Routes>
